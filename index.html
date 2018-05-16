@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <title>DashBoard</title>
+
+         <!-- Bootstrap CSS CDN -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <!-- Our Custom CSS -->
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="wrapper">
+            <!-- Sidebar Holder -->
+            <nav id="sidebar">
+                <div class="sidebar-header">
+                    Home
+                </div>
+
+                <ul class="list-unstyled components">
+                    <p></p>
+                    <li class="active">
+                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Menu</a>
+                        <ul class="collapse list-unstyled" id="homeSubmenu">
+                            <li><a href="#">Health</a></li>
+                            <li><a href="#">Alarm</a></li>
+                            <li><a href="#">Vendors</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"></a>
+                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Graphs</a>
+                        <ul class="collapse list-unstyled" id="pageSubmenu">
+                            <li><a href="#">doughnut</a></li>
+                            <li><a href="#">pie</a></li>
+                            <li><a href="#">linear</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">About</a>
+                    </li>
+                    <li>
+                        <a href="#">Contact</a>
+                    </li>
+                </ul>
+
+                <ul class="list-unstyled CTAs">
+                    <li><a href="" class="download">Soure</a></li>
+                    <li><a href="" class="article">License</a></li>
+                </ul>
+            </nav>
+
+            <!-- Page Content Holder -->
+            <div id="content">
+
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+
+                        <div class="navbar-header">
+                            <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                                <i class="glyphicon glyphicon-align-left"></i>
+                                <span>DashBoard</span>
+                            </button>
+                        </div>
+
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="#">Home</a></li>
+                                <li><a href="#">Admin</a></li>
+                                <li><a href="#">About</a></li>
+                                <li><a href="#">Careers</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+
+                <div class="container-fluid">
+                  <div class="row">
+                     <div class="col-md-6">
+          <div class="jumbotron">
+            <h2 >Overall Health</h2>
+            <p>by area</p>
+           <canvas id="doughnutChart"></canvas>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="jumbotron">
+           <div id="barchart_material" ></div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="jumbotron">
+            <h2 >Today's Alarm</h2>
+            <p>Based on Severity</p>
+           <div id="chart_div" ></div>
+          </div>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+
+
+
+
+
+        <!-- jQuery CDN -->
+         <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+         <!-- Bootstrap JS CDN -->
+         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+         <!-- Chart JS CDN -->
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+         <!-- My Custom JS -->
+         <script src="custom.js"></script>
+
+         <script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
+         <script type="text/javascript">
+        google.charts.load('current', {'packages':['bar']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+          var data = google.visualization.arrayToDataTable([
+            ['Year', 'Sales', 'Expenses', 'Profit'],
+            ['2014', 1000, 400, 200],
+            ['2015', 1170, 460, 250],
+            ['2016', 660, 1120, 300],
+            ['2017', 1030, 540, 350]
+          ]);
+
+          var options = {
+            chart: {
+              title: 'Vendor Performance',
+              subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+            },
+            bars: 'horizontal' // Required for Material Bar Charts.
+          };
+
+          var chart = new google.charts.Bar(document.getElementById('barchart_material'));
+
+          chart.draw(data, google.charts.Bar.convertOptions(options));
+        }
+      </script>
+   <script type="text/javascript">
+
+   google.charts.load('current', {
+     'packages': ['geochart'],
+     // Note: you will need to get a mapsApiKey for your project.
+     // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+     'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
+   });
+   google.charts.setOnLoadCallback(drawMarkersMap);
+
+    function drawMarkersMap() {
+    var data = google.visualization.arrayToDataTable([
+      ['Country',   'Population', 'Area Percentage'],
+      ['France',  65700000, 50],
+      ['Germany', 81890000, 27],
+      ['Poland',  38540000, 23]
+    ]);
+
+    var options = {
+      sizeAxis: { minValue: 0, maxValue: 100 },
+      region: '155', // Western Europe
+      displayMode: 'markers',
+      colorAxis: {colors: ['#e7711c', '#4374e0']} // orange to blue
+    };
+
+    var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+    chart.draw(data, options);
+   };
+   </script>
+    </body>
+</html>
